@@ -2,6 +2,10 @@ body{
 	padding-top: 70px;
 	padding-bottom: 50px;
 }
+a:hover{
+	color: #142b4f !important;
+	text-decoration: none;
+}
 .navbar-default, .panel-primary>.panel-heading  {
     background-color: #4286f4 !important;
     border-color: #4286f4;
@@ -34,6 +38,18 @@ body{
 	background-color: #142b4f;
 	border-color: #142b4f;
 	color: #fff;
+}
+.btn-success, .btn-default{
+	background-color: #4286f4 !important;
+	border-color: #4286f4 !important;
+	color:#fff !important;
+}
+.btn-default span,.btn-default strong{
+		color:#fff !important;
+}
+.btn-success:hover,.btn-default:hover{
+	background-color: #2d5faf !important;
+	border-color: #2d5faf !important;
 }
 .panel-primary{
 	border-color: #2d5faf;
@@ -84,7 +100,9 @@ left:96%;
 #main{
 
 }
-
+#datepicker-007-4994-title{
+	color:#fff !important;
+}
 .tab-pane{margin-bottom: 60px;}
 
 .search-box {
@@ -109,14 +127,20 @@ margin-top: 40px;
 }
 
 .restaurant-table{
-	background: url('images/table_bg.jpg');
-	border: 1px solid #cf8e54;
+	/*background: url('images/table_bg.jpg');*/
+	border: 1px solid #2d5faf ;
 	border-radius: 5px;
 	margin: 5px;
 	padding: 5px 0;
 	text-align: center;
+	height: 220px;
 }
-
+.restaurant-table input{
+	width:90%;
+	/*margin-top: -5% !important;*/
+	text-align:center;
+	margin:auto;
+}
 /***tooltip***/
 .tooltip.right{
 	min-width: 340px !important;
@@ -124,6 +148,8 @@ margin-top: 40px;
 }
 
 .tooltip-inner {
+	border: 1px solid #000;
+	background-color: #fff !important;
   min-width: 335px !important;
 }
 
@@ -178,7 +204,10 @@ footer p, footer a{color: #fff;}
 }
 
 .ng-valid.ng-dirty{
-	border-color: #78fa89;
+	border-color: #2d5faf;
+}
+i.fa.fa-clock-o{
+	color:#fff !important;
 }
 .ng-pristine{
 

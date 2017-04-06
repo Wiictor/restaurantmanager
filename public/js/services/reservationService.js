@@ -5,11 +5,11 @@
 				all: function(page){
 					return $http.get('api/v1/reservations/?page=' + page);
 				},
-				create: function(tableId, day, month , year, time){
+				create: function(tableId, day, month , year, time, reservedTable){
 					return $http({
 						method: 'POST',
 						url: 'api/v1/reservations',
-						params: {table_id: tableId, day:day, month:month, year:year, time:time}
+						params: {table_id: tableId, day:day, month:month, year:year, time:time, reserved_table: reservedTable}
 					});
 				},
 				show: function(id){
@@ -36,6 +36,6 @@
 					});
 				}
 			}
-			
+
 		});
 })();

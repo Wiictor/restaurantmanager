@@ -38,7 +38,7 @@
 				tableService.all(1,20)
 					.success(function(response){
 						$scope.tables = response.data;
-						
+
 					})
 					.error(function(){
 						console.log('error');
@@ -63,7 +63,7 @@
 						$scope.lastPage = response.paginator.last_page;
 						for (i=1; i<=$scope.lastPage; i++){
 							$scope.pages.push(i);
-						}  
+						}
 						$scope.loading = false;
 					});
 				$scope.currentPage = page;
@@ -92,20 +92,20 @@
 						$scope.hideSpinner = true;
 					});
 					loadTables();
-			} 
+			}
 
 			loadTables();
 			checkIfLogged();
-			$scope.searchReservations(currentDate.getDate(), currentDate.getMonth()+1, 
+			$scope.searchReservations(currentDate.getDate(), currentDate.getMonth()+1,
 				currentDate.getFullYear(), $scope.currentTime);
-
-			$scope.makeReservation = function(tableId, tableNumber, day, month , year, time){
+			$scope.makeReservation = function(tableId, tableNumber, day, month , year, time,tableReservation){
 				if($scope.logged == 'OK'){
-					reservationService.create(tableId, day, month , year, time);
+					reservationService.create(tableId, day, month , year, time, tableReservation);
 					$scope.reservedTables.push(tableId);
+					$scope.tableReservation = tableReservation;
 					//raise an event and send it to the root scope
 					$rootScope.$broadcast('reservation:made');
-					toaster.pop('success','', 'Table' + tableNumber + ' booked for ' + day + '/' + month + '/' + year + ' ' + time);
+					toaster.pop('success','', 'Table' + tableNumber + ' booked for ' + day + '/' + month + '/' + year + ' ' + time );
 				} else {
 					//alert('You must be logged in to make reservations');
 					toaster.pop('error', "Please login", "You must be logged in to make reservations");
@@ -169,7 +169,7 @@
 		$scope.toggleForm = function(){
 				$scope.showForm = !$scope.showForm;
 				$scope.showEdit = false;
-				//emptyFormFields();				
+				//emptyFormFields();
 			}
 
 			$scope.editTable = function(id){
@@ -214,12 +214,12 @@
 			};
 
 			$scope.updateTable = function(id, number, seats, position, description, available, pageToLoad){
-				tableService.update(id, number, seats, position, description, available, $scope.file)					
+				tableService.update(id, number, seats, position, description, available, $scope.file)
 						.success(function(response){
 							$scope.message = response.data;
 							toaster.pop('success', "", $scope.message);
 						});
-				
+
 				$scope.showForm = false;
 				emptyFormFields();
 				loadNthPage(pageToLoad,7);
