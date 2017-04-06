@@ -14,7 +14,7 @@
 	<form class="row search-box form-inline" ng-submit="searchReservations(dt.getDate(),dt.getMonth()+1,dt.getFullYear(),time)">
         <div class="col-md-3">
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="@{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <input type="text" class="form-control" datepicker-popup="@{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2030-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -35,7 +35,7 @@
         	<input type="submit" class="btn btn-success" value="Search" />
         </div>
     </form>
-
+@if(Auth::check())
 	<div class="tables-container row">
 		<div class="col-md-2 restaurant-table " ng-repeat="table in tables">
 
@@ -44,16 +44,16 @@
 			<p>
 				Reserved to:
 			</p>
-			 <p ng-show="reservedTables.indexOf(table.id)!=-1">{{Auth::user()->username}} </p>
-			 <!-- !!!!!!!!  ESTE ES EL INPUT QUE QUIERO ENVÍAR  !!!!!!!! -->
-			<input type="text" placeholder="Name of the client" name="@{{ table.id }}" class="form-control" ng-model="tableReservation" value="" ng-show="reservedTables.indexOf(table.id)==-1">
+			 <p ng-show="reservedTables.indexOf(table.id)!=-1"><span ng-hide="reservedTables[reservedTables.indexOf(table.id)+1] == '1' || reservedTables[reservedTables.indexOf(table.id)+1] == '2'|| reservedTables[reservedTables.indexOf(table.id)+1] == '3'|| reservedTables[reservedTables.indexOf(table.id)+1] == '4'|| reservedTables[reservedTables.indexOf(table.id)+1] == '5'|| reservedTables[reservedTables.indexOf(table.id)+1] == '6'|| reservedTables[reservedTables.indexOf(table.id)+1] == '7'|| reservedTables[reservedTables.indexOf(table.id)+1] == '8'|| reservedTables[reservedTables.indexOf(table.id)+1] == '9'|| reservedTables[reservedTables.indexOf(table.id)+1] == '10'|| reservedTables[reservedTables.indexOf(table.id)+1] == '11'|| reservedTables[reservedTables.indexOf(table.id)+1] == '12'|| reservedTables[reservedTables.indexOf(table.id)+1] == '13'|| reservedTables[reservedTables.indexOf(table.id)+1] == '14'|| reservedTables[reservedTables.indexOf(table.id)+1] == '15'|| reservedTables[reservedTables.indexOf(table.id)+1] == '16'|| reservedTables[reservedTables.indexOf(table.id)+1] == '17'|| reservedTables[reservedTables.indexOf(table.id)+1] == '18'|| reservedTables[reservedTables.indexOf(table.id)+1] == '19'|| reservedTables[reservedTables.indexOf(table.id)+1] == '20'">
+				 @{{reservedTables[reservedTables.indexOf(table.id)+1]}}</span>@{{tableReservation1}}</p>
+			<input type="text" placeholder="Client name" class="form-control" ng-model="tableReservation1" value="" ng-show="reservedTables.indexOf(table.id)==-1">
 			<br>
 			<button class="btn btn-sm btn-danger" ng-show="reservedTables.indexOf(table.id)!=-1" style="cursor:auto;">Reserved</button>
-			<!-- LA FUNCION NG-CLICK QUE LLAMA AL makeReservation ES LA QUE QUIERO AÑADIRLE EL INPUT, O QUIZAS SE PUEDA HAER DE OTRA MANERA -->
 			<a class="btn btn-sm btn-success" ng-show="reservedTables.indexOf(table.id)==-1"
-          ng-click="makeReservation(table.id, table.number, dt.getDate(), dt.getMonth()+1, dt.getFullYear(), time, )">Make reservation</a>
+          ng-click="makeReservation(table.id, table.number, dt.getDate(), dt.getMonth()+1, dt.getFullYear(), time, tableReservation1)">Make reservation</a>
 		</div>
 	</div><!-- end tables container -->
+@endif
   </div><!--end col-md-10-->
   <div class="col-md-3">
     @if(Auth::check())

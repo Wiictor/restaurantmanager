@@ -4,7 +4,7 @@ class Reservation extends \Eloquent {
 
 	protected $table ='reservations';
 
-	protected $fillable = ['user_id', 'table_id', 'reservation_start', 'reservation_end', 'seats', 'active', 'reserved_person'];
+	protected $fillable = ['user_id', 'table_id', 'reservation_start', 'reservation_end', 'seats', 'active', 'reserved_Table'];
 
 	public function getDates()
 	{

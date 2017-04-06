@@ -56,8 +56,7 @@ class ReservationsController extends \BaseController {
 		$hour = $time[0];
 		$minute = $time[1];
 		$date = Carbon::create($year, $month, $day, $hour, $minute, 0);
-	  // AQUI QUIERO DE ALGUNA MANERA AÑADIR LO QUE HE ENVIADO DESDE LA PÁGINA DE LA RESERVA
-		$reservedp = Input::get('tableReservation', 'New Client'); // AQUI ES DONDE QUIERO LLAMAR AL INPUT DE ALGUNA MANERA
+		$reservedp = Input::get('reserved_table', 'New Client');
 
 		$reservation = new Reservation();
 		$reservation->user_id = $userId;
@@ -65,8 +64,7 @@ class ReservationsController extends \BaseController {
 		$reservation->reservation_start = $date;
 		$reservation->reservation_end = $date->addHours(1);
 		$reservation->active = 1;
-		// Y AQUÍ DEBAJO ES DONDE QUIERO AÑADIR LA PERSONA RESERVADA COMO NUEVO DATO DE LA FILA A LA BASE DE DATOS
-		$reservation->reserved_person = $reservedp; // Y AQUÍ SE AÑADE A LA BASE DE DATOS
+		$reservation->reserved_person = $reservedp;
 		$reservation->save();
 
 	}
@@ -145,12 +143,41 @@ class ReservationsController extends \BaseController {
 
 		$reservations = Reservation::all();
 		$reservedTables = [];
+		$reservedPersons = [];
 		foreach ($reservations as $reservation) {
-			if( $date->between($reservation->reservation_start,$reservation->reservation_start->addHours(3)) ) {
+			if( $date->between($reservation->reservation_start,$reservation->reservation_start) ) {
+				$number = $reservation->table_id;
 				$reservedTables[] = $reservation->table_id;
+				$reservedTables[] = $reservation->reserved_person;
+				// $reservedTables[$number] = $reservation->reserved_person;
 			}
 		}
 		return Response::json(['data' => $reservedTables]);
+
+	}
+	public function checkin()
+	{
+
+		$day = Input::get('day');
+		$month = Input::get('month');
+		$year = Input::get('year');
+		$time = explode(':', Input::get('time'));
+		$hour = $time[0];
+		$minute = $time[1];
+		$date = Carbon::create($year, $month, $day, $hour, $minute, 0);
+
+
+		$reservations = Reservation::all();
+		$reservedTables = [];
+		$reservedPersons = [];
+		foreach ($reservations as $reservation) {
+			if( $date->between($reservation->reservation_start,$reservation->reservation_start) ) {
+				$number = $reservation->table_id;
+				// $reservedTables[] = $reservation->table_id;
+				$reservedPerson[$number] = $reservation->reserved_person;
+			}
+		}
+		return Response::json(['data' => $reservedPerson]);
 	}
 
 }
